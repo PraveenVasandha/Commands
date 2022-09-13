@@ -2,3 +2,35 @@ hi ragul
 
 
 What are you doing
+
+
+try {
+
+            if (staffDto.getId() != null && staffDto.getName().isEmpty() && staffDto.getEmailId().isEmpty()) {
+                Optional<StaffDao> staffDao = staffRepositry.findById(staffDto.getId());
+                if (staffDao.isPresent())
+                    return StaffMapper.STAFF_MAPPER.staffDto(staffDao.get());
+                else {
+                    return staffDto1;
+                }
+            } else if (staffDto.getId() != null && staffDto.getName() != null && staffDto.getEmailId().isEmpty()) {
+                Optional<StaffDao> staffDao = staffRepositry.findByIdAndName(staffDto.getId(),staffDto.getName());
+                if (staffDao.isPresent())
+                    return StaffMapper.STAFF_MAPPER.staffDto(staffDao.get());
+                else {
+                    return staffDto1;
+                }
+            } else {
+                return staffDto1;
+            }
+
+          /* if (name.isEmpty()){
+               StaffDao staffDao=staffRepositry.findByName(name);
+               return StaffMapper.STAFF_MAPPER.staffDto(staffDao);
+           }*/
+            // return staffDto;
+        } catch (Exception e) {
+            logger.error("Unknow Colume Select", e);
+            return staffDto1;
+        }
+
